@@ -17,7 +17,8 @@ module.exports = env => {
         resolve: {
             extensions: ['.js', '.ts', '.json'],
             alias: {
-                quasar: path.resolve(__dirname, './node_modules/quasar-framework/dist/quasar.mat.esm.js')
+                quasar: path.resolve(__dirname, './node_modules/quasar-framework/dist/quasar.mat.esm.js'),
+                variables: path.resolve(__dirname, './node_modules/quasar-framework/dist/core.variables.styl')
             }
         },
         module: {

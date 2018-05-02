@@ -1,29 +1,45 @@
 <template>
     <div id="app">
-        <q-btn class="hello-button" color="blue">{{ hello }}</q-btn>
+        <q-toolbar color="grey-9">
+            <q-toolbar-title>
+                Quasar Microposts
+            </q-toolbar-title>
+            <t-login-button/>
+        </q-toolbar>
+
+        <router-view/>
+
+        <t-message-modal/>
+        <t-signup-modal/>
+        <t-login-modal/>
     </div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import { QBtn } from 'quasar'
-    export default Vue.extend({
-        components: {
-            QBtn
-        },
-        data() {
-            return {
-                hello: 'Hello, world!'
-            }
-        }
-    })
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { QToolbar, QToolbarTitle, QBtn } from 'quasar'
+import TLoginButton  from './TLoginButton.vue'
+import TMessageModal from './TMessageModal.vue'
+import TSignupModal  from './TSignupModal.vue'
+import TLoginModal   from './TLoginModal.vue'
+
+@Component({
+    components: {
+        QToolbar,
+        QToolbarTitle,
+        QBtn,
+        TLoginButton,
+        TMessageModal,
+        TSignupModal,
+        TLoginModal
+    }
+})
+export default class App extends Vue {
+}
 </script>
 
 <style lang="stylus" scoped>
-    #app
-        width 100vw
-        height 100vh
-        display flex
-        justify-content center 
-        align-items center
+.btn
+    width 100px
 </style>

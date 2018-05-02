@@ -1,6 +1,10 @@
 import Vue from 'vue'
-import Quasar, * as Q from 'quasar'
+import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+import Quasar from 'quasar'
 import Vuelidate from 'vuelidate'
+import router from './router'
+import store from './store'
 import App from './components/App.vue'
 
 import 'quasar-framework/dist/quasar.mat.styl'
@@ -13,5 +17,7 @@ Vue.use(Vuelidate)
 
 const vue = new Vue({
     el: '#app',
+    router,
+    store,
     render: h => h(App)
 })
