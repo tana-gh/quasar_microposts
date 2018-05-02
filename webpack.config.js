@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = env => {
     const mode = env.dev  ? 'development' :
@@ -73,8 +74,14 @@ module.exports = env => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: './html/index.html'
-            })
+                template: './src/index.html'
+            }),
+            new CopyWebpackPlugin([
+                {
+                    from: './src/static/*',
+                    to: './static/[name].[ext]'
+                }
+            ])
         ]
     }
 }
