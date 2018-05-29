@@ -4,17 +4,13 @@
     </t-container>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+<script>
 import TContainer from "./TContainer.vue"
 
-@Component({
+export default {
     components: {
         TContainer
     }
-})
-export default class Error404 extends Vue {
 }
 </script>
 

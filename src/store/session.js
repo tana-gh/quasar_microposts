@@ -1,19 +1,17 @@
-import Vuex, { GetterTree, MutationTree, ActionTree } from 'vuex'
 import axios from 'axios'
 import * as C from '../constants'
-import { RootState } from './root'
 
 const state = {
     token  : ''
 }
 
-const getters: GetterTree<typeof state, RootState> = {
+const getters = {
     isLogin(state) {
         return state.token !== ''
     }
 }
 
-const mutations: MutationTree<typeof state> = {
+const mutations = {
     init(state, { token }) {
         if (token) {
             state.token = token
@@ -35,7 +33,7 @@ const mutations: MutationTree<typeof state> = {
     }
 }
 
-const actions: ActionTree<typeof state, RootState> = {
+const actions = {
     async init({ commit }, { token }) {
         let res
         try {

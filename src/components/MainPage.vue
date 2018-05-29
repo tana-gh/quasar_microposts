@@ -9,30 +9,29 @@
     </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+<script>
 import * as C from '../constants'
 import { QBtn } from 'quasar'
 import TContainer from './TContainer.vue'
 
-@Component({
+export default {
     components: {
         QBtn,
         TContainer
-    }
-})
-export default class MainPage extends Vue {
-    async login() {
-        await this.$store.dispatch(C.updateModal, {
-            name: C.modalLogin
-        })
-    }
+    },
     
-    async signup() {
-        await this.$store.dispatch(C.updateModal, {
-            name: C.modalSignup
-        })
+    methods: {
+        async login() {
+            await this.$store.dispatch(C.updateModal, {
+                name: C.modalLogin
+            })
+        },
+        
+        async signup() {
+            await this.$store.dispatch(C.updateModal, {
+                name: C.modalSignup
+            })
+        }
     }
 }
 </script>

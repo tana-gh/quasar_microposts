@@ -1,9 +1,7 @@
-import { ActionTree } from 'vuex'
 import axios from 'axios'
 import * as C from '../constants'
-import { RootState } from './root'
 
-const actions: ActionTree<{}, RootState> = {
+const actions = {
     async signup({ commit }, { userName, password, passwordConfirmation }) {
         let res
         try {

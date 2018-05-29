@@ -7,42 +7,46 @@
     </q-modal>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import { Getter } from 'vuex-class'
+<script>
+import { mapGetters } from 'vuex'
 import { QModal, QBtn } from 'quasar'
 import * as C from '../constants'
 
-@Component({
+export default {
     components: {
         QModal,
         QBtn
     },
+
+    data() {
+        return {
+            isOpened: false
+        }
+    },
+
+    computed: {
+        ...mapGetters([C.modalContent])
+    },
+
     watch: {
         isOpened(value) {
-            const modal = <TMessageModal>this
             this.$store.dispatch(C.updateModal, {
                 name   : value ? C.modalMessage : C.modalNone,
-                content: modal.modalContent
+                content: this.modalContent
             })
         }
-    }
-})
-export default class TMessageModal extends Vue {
-    isOpened = false
-
-    @Getter(C.modalContent)
-    modalContent: any
+    },
 
     created() {
         this.$store.subscribe((mutation, state) => {
             this.isOpened = state.modal.modalName === C.modalMessage
         })
-    }
+    },
 
-    close() {
-        this.isOpened = false
+    methods: {
+        close() {
+            this.isOpened = false
+        }
     }
 }
 </script>

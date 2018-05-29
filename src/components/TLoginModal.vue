@@ -9,60 +9,63 @@
     </q-modal>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+<script>
 import { QModal, QInput, QBtn } from 'quasar'
 import * as C from '../constants'
 
-@Component({
+export default {
     components: {
         QModal,
         QInput,
         QBtn
     },
+    
+    data() {
+        return {
+            isOpened: false,
+            userName: '',
+            password: ''
+        }
+    },
+
     watch: {
         isOpened(value) {
-            const modal = <TLoginModal>this
-            modal.userName = ''
-            modal.password = ''
+            this.userName = ''
+            this.password = ''
             this.$store.dispatch(C.updateModal, {
                 name: value ? C.modalLogin : C.modalNone
             })
         }
-    }
-})
-export default class TLoginModal extends Vue {
-    isOpened = false
-    userName = ''
-    password = ''
-    
+    },
+
     created() {
         this.$store.subscribe((mutation, state) => {
             this.isOpened = state.modal.modalName === C.modalLogin
         })
-    }
+    },
 
-    async login() {
-        this.close()
-        try {
-            await this.$store.dispatch(C.login, {
-                userName: this.userName,
-                password: this.password,
-                passwordConfirmation: this.password
-            })
+    methods: {
+        async login() {
+            this.close()
+            try {
+                await this.$store.dispatch(C.login, {
+                    userName: this.userName,
+                    password: this.password,
+                    passwordConfirmation: this.password
+                })
+            }
+            catch (e) {
+                console.log(e)
+                this.$store.dispatch(C.updateModal, {
+                    name   : C.modalMessage,
+                    content: 'Login failed.'
+                })
+            }
+        },
+        
+        close() {
+            this.isOpened = false
         }
-        catch (e) {
-            console.log(e)
-            this.$store.dispatch(C.updateModal, {
-                name   : C.modalMessage,
-                content: 'Login failed.'
-            })
-        }
-    }
-    
-    close() {
-        this.isOpened = false
     }
 }
 </script>

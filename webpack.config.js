@@ -8,15 +8,16 @@ module.exports = env => {
                             ''
     return {
         mode: mode,
-        entry: './src/main.ts',
+        entry: './src/main.js',
         output: {
             path: path.resolve(__dirname, `./dist/${mode}/`),
             publicPath: './',
             filename: 'bundle.js'
         },
         resolve: {
-            extensions: ['.js', '.ts', '.json'],
+            extensions: ['.js', '.json'],
             alias: {
+                vue$: 'vue/dist/vue.js',
                 quasar: path.resolve(__dirname, './node_modules/quasar-framework/dist/quasar.mat.esm.js'),
                 variables: path.resolve(__dirname, './node_modules/quasar-framework/dist/core.variables.styl')
             }
@@ -24,12 +25,9 @@ module.exports = env => {
         module: {
             rules: [
                 {
-                    test: /\.ts$/,
-                    loader: 'ts-loader',
-                    options: {
-                        appendTsSuffixTo: [/\.vue$/]
-                    },
-                    exclude: /node_modules|vue\/src/
+                    test: /\.js$/,
+                    loader: 'babel-loader',
+                    exclude: /node_modules/,
                 },
                 {
                     test: /\.vue$/,

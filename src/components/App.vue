@@ -15,16 +15,14 @@
     </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import Component from 'vue-class-component'
+<script>
 import { QToolbar, QToolbarTitle, QBtn } from 'quasar'
 import TLoginButton  from './TLoginButton.vue'
 import TMessageModal from './TMessageModal.vue'
 import TSignupModal  from './TSignupModal.vue'
 import TLoginModal   from './TLoginModal.vue'
 
-@Component({
+export default {
     components: {
         QToolbar,
         QToolbarTitle,
@@ -34,8 +32,6 @@ import TLoginModal   from './TLoginModal.vue'
         TSignupModal,
         TLoginModal
     }
-})
-export default class App extends Vue {
 }
 </script>
 
