@@ -1,11 +1,11 @@
 <template>
     <q-modal v-model="isOpened" minimized content-css="padding: 50px">
-        <q-input class="modal-text" type="text"     v-model="userName" float-label="User name"/>
-        <q-input class="modal-text" type="password" v-model="password" float-label="Password"/>
-        <q-input class="modal-text" type="password" v-model="passwordConfirmation" float-label="Retype password"/>
+        <q-input class="modal-text" type="text"     v-model="userName"             float-label="User name"       :error="$v.userName.$error"             @blur="$v.userName.$touch"            />
+        <q-input class="modal-text" type="password" v-model="password"             float-label="Password"        :error="$v.password.$error"             @blur="$v.password.$touch"            />
+        <q-input class="modal-text" type="password" v-model="passwordConfirmation" float-label="Retype password" :error="$v.passwordConfirmation.$error" @blur="$v.passwordConfirmation.$touch"/>
         <div class="modal-buttons">
-            <q-btn color="red"   @click="close()" >Cancel</q-btn>
-            <q-btn color="green" @click="signup()">Signup</q-btn>
+            <q-btn color="red"   @click="close()">Cancel</q-btn>
+            <q-btn color="green" @click="signup()" :disable="anyError">Signup</q-btn>
         </div>
     </q-modal>
 </template>
@@ -30,6 +30,17 @@ export default {
         }
     },
 
+    computed: {
+        anyError() {
+            return this.userName === ''    ||
+                   this.password === ''    ||
+                   this.passwordConfirmation === '' ||
+                   this.$v.userName.$error ||
+                   this.$v.password.$error ||
+                   this.$v.passwordConfirmation.$error
+        }
+    },
+
     watch: {
         isOpened(value) {
             this.userName = ''
@@ -38,6 +49,7 @@ export default {
             this.$store.dispatch(C.updateModal, {
                 name: value ? C.modalSignup : C.modalNone
             })
+            this.resetValidation()
         }
     },
 
@@ -68,6 +80,38 @@ export default {
         
         close() {
             this.isOpened = false
+        },
+
+        resetValidation() {
+            this.$v.userName.$reset()
+            this.$v.password.$reset()
+            this.$v.passwordConfirmation.$reset()
+        }
+    },
+
+    validations: {
+        userName: {
+            length(value) {
+                return value.length <= 60
+            },
+            regExp(value) {
+                return /^[\-\w]+$/.test(value)
+            }
+        },
+
+        password: {
+            length(value) {
+                return value.length >= 4
+            },
+            regExp(value) {
+                return /^[^\s]+$/.test(value)
+            }
+        },
+
+        passwordConfirmation: {
+            password(value) {
+                return value === this.password
+            }
         }
     }
 }
