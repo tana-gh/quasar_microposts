@@ -21,6 +21,7 @@ import TLoginButton  from './TLoginButton.vue'
 import TMessageModal from './TMessageModal.vue'
 import TSignupModal  from './TSignupModal.vue'
 import TLoginModal   from './TLoginModal.vue'
+import * as C        from '../constants.js'
 
 export default {
     components: {
@@ -31,6 +32,20 @@ export default {
         TMessageModal,
         TSignupModal,
         TLoginModal
+    },
+
+    created() {
+        this.$store.subscribe((mutation, state) => {
+            switch (mutation.type) {
+                case C.login:
+                    this.$router.push({ name: 'timeline' })
+                    break
+
+                case C.logout:
+                    this.$router.push({ name: 'main' })
+                    break
+            }
+        })
     }
 }
 </script>
