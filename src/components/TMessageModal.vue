@@ -52,8 +52,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.modal-text
-    width 50vw
 .modal-buttons
     display flex
     justify-content flex-end
