@@ -13,7 +13,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters([C.isLogin]),
+        ...mapGetters([ C.isLogin ]),
 
         buttonContent() {
             return this.isLogin ? 'Log out' : 'Log in'

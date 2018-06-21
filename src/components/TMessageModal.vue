@@ -25,7 +25,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters([C.modalContent])
+        ...mapGetters([ C.modalContent ])
     },
 
     watch: {
