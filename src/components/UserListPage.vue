@@ -1,15 +1,15 @@
 <template>
     <div>
-        <user-list-page/>
+        UserList
     </div>
 </template>
 
 <script>
-import UserListPage from './UserListPage.vue'
+import * as C from '../constants'
 
 export default {
-    components: {
-        UserListPage
+    created() {
+        this.$store.dispatch(C.getUsers)
     }
 }
 </script>

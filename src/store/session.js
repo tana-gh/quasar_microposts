@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as C from '../constants'
 
 const state = {
-    token  : ''
+    token: ''
 }
 
 const getters = {
@@ -34,17 +34,13 @@ const mutations = {
 }
 
 const actions = {
-    async init({ commit }, { token }) {
+    async init({ commit, rootGetters }, { token }) {
         let res
         try {
             res = await axios.post(
                 C.urlIsLogin,
                 {},
-                {
-                    headers: {
-                        'Authorization': 'Token ' + token
-                    }
-                }
+                { headers: rootGetters.session }
             )
         }
         catch (e) {
@@ -85,17 +81,14 @@ const actions = {
         }
     },
     
-    async logout({ commit, state }) {
+    async logout({ commit, rootGetters }) {
         let res
         try {
             res = await axios.post(
                 C.urlLogout,
                 {},
-                {
-                    headers: {
-                        'Authorization': 'Token ' + state.token
-                    }
-                })
+                { headers: rootGetters.session }
+            )
         }
         catch (e) {
             commit(C.logout)
