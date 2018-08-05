@@ -47,20 +47,18 @@ export default {
     methods: {
         async login() {
             this.close()
-            try {
-                await this.$store.dispatch(C.login, {
+            await this.$store.dispatch(C.login, {
                     userName: this.userName,
                     password: this.password,
                     passwordConfirmation: this.password
                 })
-            }
-            catch (e) {
-                console.log(e)
-                this.$store.dispatch(C.updateModal, {
-                    name   : C.modalMessage,
-                    content: 'Login failed.'
+                .catch(e => {
+                    console.log(e)
+                    this.$store.dispatch(C.updateModal, {
+                        name   : C.modalMessage,
+                        content: 'Login failed.'
+                    })
                 })
-            }
         },
         
         close() {

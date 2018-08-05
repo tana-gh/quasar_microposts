@@ -23,12 +23,8 @@ export default {
     methods: {
         async onClick() {
             if (this.isLogin) {
-                try {
-                    await this.$store.dispatch(C.logout)
-                }
-                catch (e) {
-                    console.log(e)
-                }
+                await this.$store.dispatch(C.logout)
+                    .catch(e => console.log(e))
             }
             else {
                 this.$store.dispatch(C.updateModal, {

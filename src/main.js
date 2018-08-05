@@ -4,6 +4,7 @@ import Vuelidate from 'vuelidate'
 import router    from './router'
 import store     from './store'
 import App       from './components/App.vue'
+import * as C    from './constants'
 
 import 'quasar-framework/dist/quasar.mat.styl'
 import 'quasar-extras/roboto-font'
@@ -17,5 +18,11 @@ const vue = new Vue({
     el: '#app',
     router,
     store,
+    created() {
+        const token = localStorage.getItem(C.tokenKey)
+        if (token !== null) {
+            this.$store.dispatch(C.init, { token })
+        }
+    },
     render: h => h(App)
 })

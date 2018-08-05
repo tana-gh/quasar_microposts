@@ -24,17 +24,11 @@ const mutations = {
 
 const actions = {
     async getUsers({ commit, rootGetters }) {
-        let res
-        try {
-            res = await axios.post(
+        const res = await axios.post(
                 C.urlGetUsers,
                 {},
                 { headers: rootGetters.session }
             )
-        }
-        catch (e) {
-            throw e
-        }
 
         if (res.data.status) {
             commit(C.getUsers, { users: res.data.users })

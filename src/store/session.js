@@ -35,18 +35,13 @@ const mutations = {
 
 const actions = {
     async init({ commit, rootGetters }, { token }) {
-        let res
-        try {
-            res = await axios.post(
+        console.log(rootGetters.session)
+        const res = await axios.post(
                 C.urlIsLogin,
                 {},
                 { headers: rootGetters.session }
             )
-        }
-        catch (e) {
-            commit(C.init, {})
-            throw e
-        }
+            .catch(e => { commit(C.init, {}); throw e })
 
         if (res.data.status) {
             commit(C.init, { token })
@@ -57,9 +52,7 @@ const actions = {
     },
 
     async login({ commit }, { userName, password, passwordConfirmation }) {
-        let res
-        try {
-            res = await axios.post(
+        const res = await axios.post(
                 C.urlLogin,
                 {
                     user_name: userName,
@@ -67,11 +60,7 @@ const actions = {
                     password_confirmation: passwordConfirmation
                 }
             )
-        }
-        catch (e) {
-            commit(C.logout)
-            throw e
-        }
+            .catch(e => { commit(C.logout); throw e })
 
         if (res.data.status) {
             commit(C.login, { token: res.data.token })
@@ -82,18 +71,12 @@ const actions = {
     },
     
     async logout({ commit, rootGetters }) {
-        let res
-        try {
-            res = await axios.post(
+        const res = await axios.post(
                 C.urlLogout,
                 {},
                 { headers: rootGetters.session }
             )
-        }
-        catch (e) {
-            commit(C.logout)
-            throw e
-        }
+            .catch(e => { commit(C.logout); throw e })
 
         commit(C.logout)
     }

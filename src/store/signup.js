@@ -3,9 +3,7 @@ import * as C from '../constants'
 
 const actions = {
     async signup({ commit }, { userName, password, passwordConfirmation }) {
-        let res
-        try {
-            res = await axios.post(
+        const res = await axios.post(
                 C.urlSignup,
                 {
                     user_name: userName,
@@ -13,11 +11,7 @@ const actions = {
                     password_confirmation: passwordConfirmation
                 }
             )
-        }
-        catch (e) {
-            commit(C.logout)
-            throw e
-        }
+            .catch(e => { commit(C.logout); throw e })
 
         if (res.data.status) {
             commit(C.login, { token: res.data.token })

@@ -62,20 +62,18 @@ export default {
     methods: {
         async signup() {
             this.close()
-            try {
-                await this.$store.dispatch(C.signup, {
+            await this.$store.dispatch(C.signup, {
                     userName: this.userName,
                     password: this.password,
                     passwordConfirmation: this.passwordConfirmation
                 })
-            }
-            catch (e) {
-                console.log(e)
-                this.$store.dispatch(C.updateModal, {
-                    name   : C.modalMessage,
-                    content: 'Signup failed.'
+                .catch(e => {
+                    console.log(e)
+                    this.$store.dispatch(C.updateModal, {
+                        name   : C.modalMessage,
+                        content: 'Signup failed.'
+                    })
                 })
-            }
         },
         
         close() {
