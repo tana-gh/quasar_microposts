@@ -42,11 +42,11 @@ export default {
     },
 
     watch: {
-        isOpened(value) {
+        async isOpened(value) {
             this.userName = ''
             this.password = ''
             this.passwordConfirmation = ''
-            this.$store.dispatch(C.updateModal, {
+            await this.$store.dispatch(C.updateModal, {
                 name: value ? C.modalSignup : C.modalNone
             })
             this.resetValidation()
@@ -67,9 +67,9 @@ export default {
                     password: this.password,
                     passwordConfirmation: this.passwordConfirmation
                 })
-                .catch(e => {
+                .catch(async e => {
                     console.log(e)
-                    this.$store.dispatch(C.updateModal, {
+                    await this.$store.dispatch(C.updateModal, {
                         name   : C.modalMessage,
                         content: 'Signup failed.'
                     })

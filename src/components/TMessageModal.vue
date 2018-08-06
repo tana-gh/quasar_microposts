@@ -29,8 +29,8 @@ export default {
     },
 
     watch: {
-        isOpened(value) {
-            this.$store.dispatch(C.updateModal, {
+        async isOpened(value) {
+            await this.$store.dispatch(C.updateModal, {
                 name   : value ? C.modalMessage : C.modalNone,
                 content: this.modalContent
             })

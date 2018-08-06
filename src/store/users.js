@@ -10,7 +10,6 @@ const state = {
 const mutations = {
     getUsers(state, { users }) {
         state.users = users
-        console.log(users)
     },
 
     getFollowees(state, { followees }) {
@@ -27,7 +26,7 @@ const actions = {
         const res = await axios.post(
                 C.urlGetUsers,
                 {},
-                { headers: rootGetters.session }
+                { headers: rootGetters.authHeader }
             )
 
         if (res.data.status) {

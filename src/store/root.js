@@ -1,9 +1,7 @@
 
 const rootGetters = {
-    session(state) {
-        return {
-            'Authorization': 'Token ' + state.session.token
-        }
+    auth(state, getters) {
+        return getters.authHeader
     }
 }
 

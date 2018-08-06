@@ -18,10 +18,10 @@ const vue = new Vue({
     el: '#app',
     router,
     store,
-    created() {
+    async created() {
         const token = localStorage.getItem(C.tokenKey)
         if (token !== null) {
-            this.$store.dispatch(C.init, { token })
+            await this.$store.dispatch(C.init, { token })
         }
     },
     render: h => h(App)

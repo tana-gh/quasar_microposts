@@ -8,8 +8,15 @@
 import * as C from '../constants'
 
 export default {
-    created() {
-        this.$store.dispatch(C.getUsers)
+    async mounted() {
+        await new Promise(async resolve => {
+            while (this.$store.state.session.token === '') {
+                await new Promise(res => setTimeout(res, 100))
+            }
+            resolve()
+        })
+        await this.$store.dispatch(C.getUsers)
+        console.log(this.$store.state.users.users)
     }
 }
 </script>

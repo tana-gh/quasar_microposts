@@ -27,7 +27,7 @@ export default {
                     .catch(e => console.log(e))
             }
             else {
-                this.$store.dispatch(C.updateModal, {
+                await this.$store.dispatch(C.updateModal, {
                     name: C.modalLogin
                 })
             }

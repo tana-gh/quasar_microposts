@@ -6,6 +6,10 @@ const state = {
 }
 
 const getters = {
+    authHeader(state) {
+        return authHeader(state.token)
+    },
+    
     isLogin(state) {
         return state.token !== ''
     }
@@ -34,15 +38,14 @@ const mutations = {
 }
 
 const actions = {
-    async init({ commit, rootGetters }, { token }) {
-        console.log(rootGetters.session)
+    async init({ commit }, { token }) {
         const res = await axios.post(
                 C.urlIsLogin,
                 {},
-                { headers: rootGetters.session }
+                { headers: authHeader(token) }
             )
             .catch(e => { commit(C.init, {}); throw e })
-
+        
         if (res.data.status) {
             commit(C.init, { token })
         }
@@ -74,11 +77,17 @@ const actions = {
         const res = await axios.post(
                 C.urlLogout,
                 {},
-                { headers: rootGetters.session }
+                { headers: rootGetters.authHeader }
             )
             .catch(e => { commit(C.logout); throw e })
 
         commit(C.logout)
+    }
+}
+
+const authHeader = (token) => {
+    return {
+        'Authorization': 'Token ' + token
     }
 }
 
