@@ -37,20 +37,62 @@ const actions = {
         }
     },
 
-    getFollowees({ commit }) {
+    async getFollowees({ commit, rootGetters }) {
+        const res = await axios.post(
+                C.urlGetFollowees,
+                {},
+                { headers: rootGetters.authHeader }
+            )
 
+        if (res.data.status) {
+            commit(C.getFollowees, { followees: res.data.users })
+        }
+        else {
+            commit(C.getFollowees, { followees: [] })
+        }
     },
 
-    getFollowers({ commit }) {
+    async getFollowers({ commit, rootGetters }) {
+        const res = await axios.post(
+                C.urlGetFollowers,
+                {},
+                { headers: rootGetters.authHeader }
+            )
 
+        if (res.data.status) {
+            commit(C.getFollowers, { followers: res.data.users })
+        }
+        else {
+            commit(C.getFollowers, { followers: [] })
+        }
     },
 
-    follow({ commit }, { user }) {
+    async follow({ commit, state, rootGetters }, { user }) {
+        const res = await axios.post(
+                C.urlFollow,
+                { user },
+                { headers: rootGetters.authHeader }
+            )
 
+        if (res.data.status) {
+            commit(C.getFollowees, {
+                followees: state.followees.concat([user])
+            })
+        }
     },
 
-    unfollow({ commit }, { user }) {
+    async unfollow({ commit, state, rootGetters }, { user }) {
+        const res = await axios.post(
+                C.urlUnfollow,
+                { user },
+                { headers: rootGetters.authHeader }
+            )
 
+        if (res.data.status) {
+            commit(C.getFollowees, {
+                followees: state.followees.filter(x => x != user)
+            })
+        }
     }
 }
 
