@@ -5,16 +5,14 @@
 </template>
 
 <script>
-import * as C from '../constants'
+import * as C    from '../constants'
+import * as util from '../util.js'
 
 export default {
     async mounted() {
-        await new Promise(async resolve => {
-            while (this.$store.state.session.token === '') {
-                await new Promise(res => setTimeout(res, 100))
-            }
-            resolve()
-        })
+        await util.waitCondition(
+            () => this.$store.state.session.token === ''
+        )
         await this.$store.dispatch(C.getUsers)
         console.log(this.$store.state.users.users)
     }
