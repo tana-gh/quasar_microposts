@@ -2,7 +2,8 @@ import axios from 'axios'
 import * as C from '../constants'
 
 const state = {
-    token: ''
+    token : '',
+    myUser: {}
 }
 
 const getters = {
