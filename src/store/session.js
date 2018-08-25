@@ -3,7 +3,7 @@ import * as C from '../constants'
 
 const state = {
     token : '',
-    myUser: {}
+    myUser: null
 }
 
 const getters = {
@@ -17,18 +17,21 @@ const getters = {
 }
 
 const mutations = {
-    init(state, { token }) {
+    init(state, { token, user }) {
         if (token) {
-            state.token = token
+            state.token  = token
+            state.myUser = user
         }
         else {
-            state.token = ''
+            state.token  = ''
+            state.myUser = null
             localStorage.removeItem(C.tokenKey)
         }
     },
 
-    login(state, { token }) {
-        state.token = token
+    login(state, { token, user }) {
+        state.token  = token
+        state.myUser = user
         localStorage.setItem(C.tokenKey, token)
     },
 
@@ -48,7 +51,7 @@ const actions = {
             .catch(e => { commit(C.init, {}); throw e })
         
         if (res.data.status) {
-            commit(C.init, { token })
+            commit(C.init, { token, user: res.data.user })
         }
         else {
             commit(C.init, {})
@@ -67,7 +70,7 @@ const actions = {
             .catch(e => { commit(C.logout); throw e })
 
         if (res.data.status) {
-            commit(C.login, { token: res.data.token })
+            commit(C.login, { token: res.data.token, user: res.data.user })
         }
         else {
             commit(C.logout)

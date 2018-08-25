@@ -4,7 +4,7 @@
             v-for="user in $store.users.users"
             :key="user.id"
             :user-name="user.name"
-            :following=""/>
+            :following="user.following"/>
     </div>
 </template>
 
@@ -24,7 +24,6 @@ export default {
     methods: {
         refresh() {
             this.$store.dispatch(C.getUsers)
-            this.$store.dispatch(C.getFollowees)
         }
     }
 }
