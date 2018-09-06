@@ -2,22 +2,12 @@ import axios from 'axios'
 import * as C from '../constants'
 
 const state = {
-    users    : [],
-    followees: [],
-    followers: []
+    users: []
 }
 
 const mutations = {
     getUsers(state, { users }) {
         state.users = users
-    },
-
-    getFollowees(state, { followees }) {
-        state.followees = followees
-    },
-
-    getFollowers(state, { followers }) {
-        state.followers = followers
     }
 }
 
@@ -37,37 +27,7 @@ const actions = {
         }
     },
 
-    async getFollowees({ commit, rootGetters }) {
-        const res = await axios.post(
-                C.urlGetFollowees,
-                {},
-                { headers: rootGetters.authHeader }
-            )
-
-        if (res.data.status) {
-            commit(C.getFollowees, { followees: res.data.users })
-        }
-        else {
-            commit(C.getFollowees, { followees: [] })
-        }
-    },
-
-    async getFollowers({ commit, rootGetters }) {
-        const res = await axios.post(
-                C.urlGetFollowers,
-                {},
-                { headers: rootGetters.authHeader }
-            )
-
-        if (res.data.status) {
-            commit(C.getFollowers, { followers: res.data.users })
-        }
-        else {
-            commit(C.getFollowers, { followers: [] })
-        }
-    },
-
-    async follow({ commit, state, rootGetters }, { user }) {
+    async follow({ dispatch, rootGetters }, { user }) {
         const res = await axios.post(
                 C.urlFollow,
                 { user },
@@ -75,13 +35,11 @@ const actions = {
             )
 
         if (res.data.status) {
-            commit(C.getFollowees, {
-                followees: state.followees.concat([user])
-            })
+            await dispatch(C.getUsers)
         }
     },
 
-    async unfollow({ commit, state, rootGetters }, { user }) {
+    async unfollow({ dispatch, rootGetters }, { user }) {
         const res = await axios.post(
                 C.urlUnfollow,
                 { user },
@@ -89,9 +47,7 @@ const actions = {
             )
 
         if (res.data.status) {
-            commit(C.getFollowees, {
-                followees: state.followees.filter(x => x != user)
-            })
+            await dispatch(C.getUsers)
         }
     }
 }

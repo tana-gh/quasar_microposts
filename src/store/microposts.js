@@ -43,9 +43,7 @@ const actions = {
 
 const toObject = array => {
     array.reduce((prev, curr) => {
-        const newObj = {}
-        newObj[curr.id] = curr
-        Object.assign(prev, newObj)
+        prev[curr.id] = curr
     })
 }
 
