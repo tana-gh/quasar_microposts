@@ -1,9 +1,9 @@
 <template>
     <t-container>
-        <div class="username">
+        <span class="username">
             {{ userName }}
-        </div>
-        <q-btn push color="gray-9">
+        </span>
+        <q-btn push color="grey-9">
             {{ followLabel }}
         </q-btn>
     </t-container>
@@ -12,7 +12,7 @@
 
 <script>
 import { QBtn }   from 'quasar'
-import TContainer from 'TContainer.vue'
+import TContainer from './TContainer.vue'
 
 export default {
     components: {
@@ -26,7 +26,9 @@ export default {
     ],
 
     computed: {
-        followLabel: () => this.following ? 'Unfollow' : 'Follow'
+        followLabel() {
+            return this.following ? 'Unfollow' : 'Follow'
+        }
     }
 }
 </script>
