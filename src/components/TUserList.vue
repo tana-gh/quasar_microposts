@@ -1,20 +1,27 @@
 <template>
     <div>
-        <t-user-item
-            v-for="user in $store.state.users.users"
-            :key="user.id"
-            :user-name="user.name"
-            :following="user.following"/>
+        <q-list separator highlight>
+            <q-item
+                v-for="user in $store.state.users.users"
+                :key="user.id">
+                <t-user-item
+                    :user-name="user.name"
+                    :following="user.following"/>
+            </q-item>
+        </q-list>
     </div>
 </template>
 
 <script>
+import { QList, QItem } from 'quasar'
 import TUserItem from './TUserItem.vue'
 import * as C    from '../constants'
 import * as util from '../util'
 
 export default {
     components: {
+        QList,
+        QItem,
         TUserItem
     },
 

@@ -1,11 +1,17 @@
 <template>
     <t-container>
-        <span class="username">
-            {{ userName }}
-        </span>
-        <q-btn push color="grey-9">
-            {{ followLabel }}
-        </q-btn>
+        <div class="item">
+            <div class="username-holder">
+                <span class="username">
+                    {{ userName }}
+                </span>
+            </div>
+            <div class="button-holder">
+                <q-btn class="button" push color="grey-9">
+                    {{ followLabel }}
+                </q-btn>
+            </div>
+        </div>
     </t-container>
 </template>
 
@@ -34,4 +40,22 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '~variables'
+.item
+    display flex
+    .username-holder
+        width 50%
+        text-align     right
+        vertical-align middle
+        .username
+            font-size    36px
+            font-weight  bold
+            font-variant small-caps
+            color $grey-9
+    .button-holder
+        width 50%
+        text-align left
+        vertical-align middle
+        .button
+            margin-left 20px
 </style>
