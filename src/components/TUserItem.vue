@@ -7,7 +7,8 @@
                 </span>
             </div>
             <div class="button-holder">
-                <q-btn class="button" push color="grey-9">
+                <q-btn class="button" push color="grey-9"
+                       @click="buttonClick()">
                     {{ followLabel }}
                 </q-btn>
             </div>
@@ -19,6 +20,7 @@
 <script>
 import { QBtn }   from 'quasar'
 import TContainer from './TContainer.vue'
+import * as C     from '../constants'
 
 export default {
     components: {
@@ -35,6 +37,17 @@ export default {
         followLabel() {
             return this.following ? 'Unfollow' : 'Follow'
         }
+    },
+
+    methods: {
+        buttonClick() {
+            if (this.following) {
+                this.$store.dispatch(C.unfollow, { user: this.userName })
+            }
+            else {
+                this.$store.dispatch(C.follow, { user: this.userName })
+            }
+        }
     }
 }
 </script>
@@ -48,9 +61,8 @@ export default {
         text-align     right
         vertical-align middle
         .username
-            font-size    36px
-            font-weight  bold
-            font-variant small-caps
+            font-size   36px
+            font-weight bold
             color $grey-9
     .button-holder
         width 50%
