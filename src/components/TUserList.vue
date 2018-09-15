@@ -16,7 +16,7 @@
 import { QList, QItem } from 'quasar'
 import TUserItem from './TUserItem.vue'
 import * as C    from '../constants'
-import * as util from '../util'
+import * as Util from '../util'
 
 export default {
     components: {
@@ -26,12 +26,12 @@ export default {
     },
 
     async mounted() {
-        this.refresh()
+        await this.refresh()
     },
 
     methods: {
         async refresh() {
-            await util.waitCondition(
+            await Util.waitCondition(
                 () => this.$store.state.session.token === ''
             )
             await this.$store.dispatch(C.getUsers)

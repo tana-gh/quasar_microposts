@@ -40,12 +40,12 @@ export default {
     },
 
     methods: {
-        buttonClick() {
+        async buttonClick() {
             if (this.following) {
-                this.$store.dispatch(C.unfollow, { user: this.userName })
+                await this.$store.dispatch(C.unfollow, { user: this.userName })
             }
             else {
-                this.$store.dispatch(C.follow, { user: this.userName })
+                await this.$store.dispatch(C.follow, { user: this.userName })
             }
         }
     }

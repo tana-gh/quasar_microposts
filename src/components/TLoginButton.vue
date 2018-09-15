@@ -38,5 +38,5 @@ export default {
 
 <style lang="stylus" scoped>
 .login-button
-    width 100px
+    width 7em
 </style>

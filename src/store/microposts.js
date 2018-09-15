@@ -7,17 +7,17 @@ const state = {
 
 const mutations = {
     getMicroposts(state, { microposts }) {
-        Object.assign(state.microposts, toObject(microposts))
+        state.microposts = Object.assign({ ...state.microposts }, toObject(microposts))
     },
 
-    postMicroposts(state, { micropost }) {
-        Object.assign(state.microposts, toObject([micropost]))
+    postMicropost(state, { microposts }) {
+        state.microposts = Object.assign({ ...state.microposts }, toObject(microposts))
     }
 }
 
 const actions = {
     async getMicroposts({ commit, rootGetters }, { index, count }) {
-        const res = axios.post(
+        const res = await axios.post(
                 C.urlGetMicroposts,
                 { index, count },
                 { headers: rootGetters.authHeader }
@@ -29,22 +29,24 @@ const actions = {
     },
 
     async postMicropost({ commit, rootGetters }, { micropost }) {
-        const res = axios.post(
+        const res = await axios.post(
                 C.urlPostMicropost,
                 { micropost },
                 { headers: rootGetters.authHeader }
             )
 
         if (res.data.status) {
-            commit(C.postMicropost, { micropost: res.data.micropost })
+            commit(C.postMicropost, { microposts: res.data.microposts })
         }
     }
 }
 
 const toObject = array => {
-    array.reduce((prev, curr) => {
-        prev[curr.id] = curr
+    const obj = {}
+    array.forEach(m => {
+        obj[m.id] = m
     })
+    return obj
 }
 
 export default {

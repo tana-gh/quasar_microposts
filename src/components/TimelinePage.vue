@@ -1,15 +1,18 @@
 <template>
     <div>
-        <user-list-page/>
+        <t-micropost-input/>
+        <t-micropost-list count="1"/>
     </div>
 </template>
 
 <script>
-import UserListPage from './UserListPage.vue'
+import TMicropostInput from './TMicropostInput.vue'
+import TMicropostList  from './TMicropostList.vue'
 
 export default {
     components: {
-        UserListPage
+        TMicropostInput,
+        TMicropostList
     }
 }
 </script>
