@@ -1,6 +1,7 @@
 import Vue       from 'vue'
 import Quasar    from 'quasar'
 import Vuelidate from 'vuelidate'
+import VueMoment from 'vue-moment'
 import router    from './router'
 import store     from './store'
 import App       from './components/App.vue'
@@ -13,6 +14,7 @@ import 'quasar-extras/animate'
 
 Vue.use(Quasar)
 Vue.use(Vuelidate)
+Vue.use(VueMoment)
 
 const vue = new Vue({
     el: '#app',

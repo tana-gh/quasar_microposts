@@ -1,13 +1,41 @@
 <template>
     <div id="app">
-        <q-toolbar color="grey-9">
-            <q-toolbar-title>
-                Quasar Microposts
-            </q-toolbar-title>
-            <t-login-button/>
-        </q-toolbar>
+        <q-layout view="hHh LpR lfr">
+            <q-layout-header>
+                <q-toolbar color="grey-9">
+                    <q-btn
+                        flat round dense icon="menu"
+                        @click="menu = !menu"/>
+                    <q-toolbar-title>
+                        Quasar Microposts
+                    </q-toolbar-title>
+                    <t-login-button/>
+                </q-toolbar>
+            </q-layout-header>
 
-        <router-view/>
+            <q-layout-drawer
+                side="left"
+                v-model="menu">
+                <q-list>
+                    <q-item
+                        :class="{ disabled: $route.name === 'timeline' }"
+                        :highlight="$route.name !== 'timeline'"
+                        @click.native="$router.push('timeline')">
+                        Timeline
+                    </q-item>
+                    <q-item
+                        :class="{ disabled: $route.name === 'userlist' }"
+                        :highlight="$route.name !== 'userlist'"
+                        @click.native="$router.push('userlist')">
+                        User list
+                    </q-item>
+                </q-list>
+            </q-layout-drawer>
+
+            <q-page-container>
+                <router-view/>
+            </q-page-container>
+        </q-layout>
 
         <t-message-modal/>
         <t-signup-modal/>
@@ -16,7 +44,17 @@
 </template>
 
 <script>
-import { QToolbar, QToolbarTitle, QBtn } from 'quasar'
+import {
+    QLayout,
+    QLayoutHeader,
+    QPageContainer,
+    QLayoutDrawer,
+    QToolbar,
+    QToolbarTitle,
+    QList,
+    QItem,
+    QBtn
+} from 'quasar'
 import TLoginButton  from './TLoginButton.vue'
 import TMessageModal from './TMessageModal.vue'
 import TSignupModal  from './TSignupModal.vue'
@@ -25,13 +63,25 @@ import * as C        from '../constants.js'
 
 export default {
     components: {
+        QLayout,
+        QLayoutHeader,
+        QPageContainer,
+        QLayoutDrawer,
         QToolbar,
         QToolbarTitle,
+        QList,
+        QItem,
         QBtn,
         TLoginButton,
         TMessageModal,
         TSignupModal,
         TLoginModal
+    },
+
+    data() {
+        return {
+            menu: false
+        }
     },
 
     created() {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <t-micropost-input/>
-        <t-micropost-list count="1"/>
+        <t-micropost-list count="20"/>
     </div>
 </template>
 
