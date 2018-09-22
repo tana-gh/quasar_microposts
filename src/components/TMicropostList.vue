@@ -1,27 +1,32 @@
 <template>
     <div>
-        <q-list separator highlight>
-            <q-item v-for="m in micropostValues" :key="m.id">
-                <t-micropost-item
-                    :id="m.id"
-                    :posted-at="m.posted_at"
-                    :user="m.user"
-                    :micropost="m.micropost"/>
-            </q-item>
-        </q-list>
-        <div class="button-holder">
-            <q-btn
-                class="button"
-                push color="grey-9"
-                @click="getMicroposts(currentIndex, count)">
-                More...
-            </q-btn>
+        <div v-if="$store.getters.isLoading">
+            <q-spinner-puff color="grey-9" size="128"/>
+        </div>
+        <div v-else>
+            <q-list separator highlight>
+                <q-item v-for="m in micropostValues" :key="m.id">
+                    <t-micropost-item
+                        :id="m.id"
+                        :posted-at="m.posted_at"
+                        :user="m.user"
+                        :micropost="m.micropost"/>
+                </q-item>
+            </q-list>
+            <div class="button-holder">
+                <q-btn
+                    class="button"
+                    push color="grey-9"
+                    @click="getMicroposts(currentIndex, count)">
+                    More...
+                </q-btn>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import { QList, QItem, QBtn } from 'quasar'
+import { QList, QItem, QBtn, QSpinnerPuff } from 'quasar'
 import TMicropostItem from './TMicropostItem.vue'
 import * as C    from '../constants'
 import * as Util from '../util'
@@ -58,7 +63,7 @@ export default {
     methods: {
         async getMicroposts(index, count) {
             await Util.waitCondition(
-                () => this.$store.state.session.token === ''
+                () => !this.$store.getters.isLogin
             )
             await this.$store.dispatch(C.getMicroposts, { index, count })
             this.currentIndex = Util.objectKeyCount(this.$store.state.microposts.microposts)

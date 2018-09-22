@@ -10,6 +10,10 @@ import TUserList from './TUserList.vue'
 export default {
     components: {
         TUserList
+    },
+
+    mount() {
+        
     }
 }
 </script>

@@ -17,7 +17,7 @@ const actions = {
             commit(C.login, { token: res.data.token })
         }
         else {
-            commit(C.logout)
+            dispatch(C.reset)
         }
     }
 }

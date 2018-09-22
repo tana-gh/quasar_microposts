@@ -7,8 +7,10 @@
                 </span>
             </div>
             <div class="button-holder">
-                <q-btn class="button" push color="grey-9"
-                       @click="buttonClick()">
+                <q-btn 
+                    v-if="!isMe"
+                    class="button" push color="grey-9"
+                    @click="buttonClick()">
                     {{ followLabel }}
                 </q-btn>
             </div>
@@ -34,6 +36,10 @@ export default {
     ],
 
     computed: {
+        isMe() {
+            return this.userName == this.$store.state.session.myUser.name
+        },
+
         followLabel() {
             return this.following ? 'Unfollow' : 'Follow'
         }

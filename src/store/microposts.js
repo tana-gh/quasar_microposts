@@ -12,6 +12,10 @@ const mutations = {
 
     postMicropost(state, { microposts }) {
         state.microposts = Object.assign({ ...state.microposts }, toObject(microposts))
+    },
+
+    resetMicroposts(state) {
+        state.microposts = {}
     }
 }
 

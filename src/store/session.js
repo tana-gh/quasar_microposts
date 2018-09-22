@@ -2,6 +2,7 @@ import axios from 'axios'
 import * as C from '../constants'
 
 const state = {
+    authentication: C.unknownState,
     token : '',
     myUser: null
 }
@@ -12,17 +13,19 @@ const getters = {
     },
     
     isLogin(state) {
-        return state.token !== ''
+        return state.authentication === C.loginState
     }
 }
 
 const mutations = {
     init(state, { token, user }) {
         if (token) {
+            state.authentication = C.loginState
             state.token  = token
             state.myUser = user
         }
         else {
+            state.authentication = C.logoutState
             state.token  = ''
             state.myUser = null
             localStorage.removeItem(C.tokenKey)
@@ -30,13 +33,16 @@ const mutations = {
     },
 
     login(state, { token, user }) {
+        state.authentication = C.login
         state.token  = token
         state.myUser = user
         localStorage.setItem(C.tokenKey, token)
     },
 
     logout(state) {
-        state.token = ''
+        state.authentication = C.logoutState
+        state.token  = ''
+        state.myUser = null
         localStorage.removeItem(C.tokenKey)
     }
 }
@@ -73,11 +79,11 @@ const actions = {
             commit(C.login, { token: res.data.token, user: res.data.user })
         }
         else {
-            commit(C.logout)
+            dispatch(C.reset)
         }
     },
     
-    async logout({ commit, rootGetters }) {
+    async logout({ dispatch, commit, rootGetters }) {
         const res = await axios.post(
                 C.urlLogout,
                 {},
@@ -85,7 +91,13 @@ const actions = {
             )
             .catch(e => { commit(C.logout); throw e })
 
+        dispatch(C.reset)
+    },
+
+    reset({ commit }) {
         commit(C.logout)
+        commit(C.resetUsers)
+        commit(C.resetMicroposts)
     }
 }
 

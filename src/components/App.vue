@@ -1,9 +1,11 @@
+<!--v-if="$store.getters.isLogin"-->
 <template>
     <div id="app">
         <q-layout view="hHh LpR lfr">
             <q-layout-header>
                 <q-toolbar color="grey-9">
                     <q-btn
+                        
                         flat round dense icon="menu"
                         @click="menu = !menu"/>
                     <q-toolbar-title>

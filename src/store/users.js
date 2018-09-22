@@ -8,6 +8,10 @@ const state = {
 const mutations = {
     getUsers(state, { users }) {
         state.users = users
+    },
+
+    resetUsers(state) {
+        state.users = []
     }
 }
 

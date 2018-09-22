@@ -1,19 +1,24 @@
 <template>
     <div>
-        <q-list separator highlight>
-            <q-item
-                v-for="user in $store.state.users.users"
-                :key="user.id">
-                <t-user-item
-                    :user-name="user.name"
-                    :following="user.following"/>
-            </q-item>
-        </q-list>
+        <div v-if="$store.getters.isLoading">
+            <q-spinner-puff color="grey-9" size="128"/>
+        </div>
+        <div v-else>
+            <q-list separator highlight>
+                <q-item
+                    v-for="user in $store.state.users.users"
+                    :key="user.id">
+                    <t-user-item
+                        :user-name="user.name"
+                        :following="user.following"/>
+                </q-item>
+            </q-list>
+        </div>
     </div>
 </template>
 
 <script>
-import { QList, QItem } from 'quasar'
+import { QList, QItem, QSpinnerPuff } from 'quasar'
 import TUserItem from './TUserItem.vue'
 import * as C    from '../constants'
 import * as Util from '../util'
@@ -32,7 +37,7 @@ export default {
     methods: {
         async refresh() {
             await Util.waitCondition(
-                () => this.$store.state.session.token === ''
+                () => !this.$store.getters.isLogin
             )
             await this.$store.dispatch(C.getUsers)
         }
